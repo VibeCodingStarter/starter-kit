@@ -8,7 +8,7 @@ The **Starter Kit** is an open-source Next.js template that helps developers bui
 
 ---
 
-## 🚀 Why Vibe Coding Starter Kit?
+## 🚀 Why Vibe Coding Starter Kit? 🤘🏽
 
 - 🧑‍💻 Clone the repo, wire up your credentials, and start shipping within minutes
 - 📦 Launch with user dashboards and the hosted Cloud API already wired together
