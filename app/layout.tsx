@@ -10,6 +10,7 @@ import { DevkitDoctor } from "@/components/devkit/devkit-doctor";
 import { AuthProvider, DeploymentModeProvider } from "@/lib/auth-context";
 import { hydrateDeploymentMode } from "@/lib/deployment-mode";
 import { getCurrentUser } from "@/lib/auth-server";
+import { isCurrentRoute } from "@/lib/server-utils";
 
 import "./globals.css";
 
@@ -34,6 +35,9 @@ export default async function RootLayout({
 
   // Fetch current user (async - server-side only)
   const user = await getCurrentUser();
+
+  // Check if current path is a console page (exclude Header/Footer for console)
+  const isConsolePage = await isCurrentRoute("/console");
 
   return (
     <html lang="en" className={geistSans.className} suppressHydrationWarning>
@@ -65,9 +69,9 @@ export default async function RootLayout({
                 </div>
               )}
 
-              <Header />
+              {!isConsolePage && <Header />}
               <main className="flex flex-1 flex-col">{children}</main>
-              <Footer />
+              {!isConsolePage && <Footer />}
               <Analytics />
               <SpeedInsights />
 
