@@ -55,42 +55,52 @@ async function clearTokensFromCookies(): Promise<void> {
 export async function backendRegisterAction(formData: FormData): Promise<{
   success: boolean;
   redirectTo?: string;
+  error?: string;
 }> {
   const email = formData.get("email")?.toString().trim();
   const password = formData.get("password")?.toString() ?? "";
   const fullName = formData.get("full_name")?.toString().trim();
 
   if (!email) {
-    throw new Error("Email is required.");
+    return { success: false, error: "Email is required." };
   }
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailPattern.test(email)) {
-    throw new Error("Enter a valid email address.");
+    return { success: false, error: "Enter a valid email address." };
   }
 
   if (!password || password.length < 8) {
-    throw new Error("Password must be at least 8 characters long.");
+    return {
+      success: false,
+      error: "Password must be at least 8 characters long.",
+    };
   }
 
   // Enhanced password validation matching backend requirements
   const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
   if (!passwordPattern.test(password)) {
-    throw new Error(
-      "Password must contain uppercase, lowercase, and digit characters."
-    );
+    return {
+      success: false,
+      error:
+        "Password must contain uppercase, lowercase, and digit characters.",
+    };
   }
 
   const deploymentConfig = hydrateDeploymentMode();
 
   if (deploymentConfig.mode === "project") {
-    throw new Error("Developer registration is not available in project mode.");
+    return {
+      success: false,
+      error: "Developer registration is not available in project mode.",
+    };
   }
 
   if (!deploymentConfig.isReady) {
-    throw new Error(
-      "Application is not properly configured. Please contact support."
-    );
+    return {
+      success: false,
+      error: "Application is not properly configured. Please contact support.",
+    };
   }
 
   const operatorKey =
@@ -99,11 +109,14 @@ export async function backendRegisterAction(formData: FormData): Promise<{
     null;
 
   if (!operatorKey) {
-    throw new Error("Operator key is not configured for this deployment.");
+    return {
+      success: false,
+      error: "Operator key is not configured for this deployment.",
+    };
   }
 
   if (!deploymentConfig.backendApiUrl) {
-    throw new Error("Backend API URL is not configured.");
+    return { success: false, error: "Backend API URL is not configured." };
   }
 
   const controller = new AbortController();
@@ -140,17 +153,24 @@ export async function backendRegisterAction(formData: FormData): Promise<{
         }
       );
     } catch (networkError) {
+      clearTimeout(timeoutId);
+
       if (networkError instanceof Error && networkError.name === "AbortError") {
-        throw new Error("Registration timed out. Please try again.");
+        return {
+          success: false,
+          error: "Registration timed out. Please try again.",
+        };
       }
 
       if (process.env.NODE_ENV === "development") {
         console.error("[backendRegisterAction] Network error", networkError);
       }
 
-      throw new Error(
-        "Unable to reach the registration service. Please retry shortly."
-      );
+      return {
+        success: false,
+        error:
+          "Unable to reach the registration service. Please retry shortly.",
+      };
     } finally {
       clearTimeout(timeoutId);
     }
@@ -161,32 +181,41 @@ export async function backendRegisterAction(formData: FormData): Promise<{
         .catch(() => null)) as Partial<ApiErrorResponse> | null;
 
       if (response.status === 429) {
-        throw new Error(
-          "Too many registration attempts. Please try again later."
-        );
+        return {
+          success: false,
+          error: "Too many registration attempts. Please try again later.",
+        };
       }
 
       if (response.status === 409) {
-        throw new Error("An account already exists for this email.");
+        return {
+          success: false,
+          error: "An account already exists for this email.",
+        };
       }
 
       if (response.status === 400) {
         const detail = errorPayload?.detail ?? "Registration failed.";
         const normalizedDetail = detail.toLowerCase();
-        throw new Error(
-          normalizedDetail.includes("already")
+        return {
+          success: false,
+          error: normalizedDetail.includes("already")
             ? "An account already exists for this email."
-            : detail
-        );
+            : detail,
+        };
       }
 
       if (response.status >= 500) {
-        throw new Error("Unexpected server error. Please try again.");
+        return {
+          success: false,
+          error: "Unexpected server error. Please try again.",
+        };
       }
 
-      throw new Error(
-        errorPayload?.detail ?? "Registration failed. Please try again."
-      );
+      return {
+        success: false,
+        error: errorPayload?.detail ?? "Registration failed. Please try again.",
+      };
     }
 
     const registrationData = (await response.json()) as RegistrationResponse;
@@ -206,9 +235,10 @@ export async function backendRegisterAction(formData: FormData): Promise<{
       !provisioning?.developer_key ||
       !provisioning?.api_key
     ) {
-      throw new Error(
-        "Provisioning data is missing from the registration response."
-      );
+      return {
+        success: false,
+        error: "Provisioning data is missing from the registration response.",
+      };
     }
 
     // Store provisioning data in secure httpOnly cookie
@@ -243,9 +273,13 @@ export async function backendRegisterAction(formData: FormData): Promise<{
       console.error("[backendRegisterAction] Unexpected error", error);
     }
 
-    throw error instanceof Error
-      ? error
-      : new Error("Registration failed. Please try again.");
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : "Registration failed. Please try again.",
+    };
   }
 }
 
