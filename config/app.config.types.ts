@@ -1,7 +1,7 @@
 export type AppMode = 'operator' | 'console' | 'project';
 
 export interface ModeConfig {
-  mode: AppMode;
+  currentMode: AppMode;
   operatorKey?: string;
   projectId?: string;
   projectKey?: string;

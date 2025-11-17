@@ -1,64 +1,25 @@
 import { AppConfig } from "./app.config.types";
-import { getModeConfig } from "./mode.config";
+import { hydrateDeploymentMode } from "@/lib/deployment-mode";
 
-const modeConfig = getModeConfig();
-
-// Mode-specific configurations
-const getModeSpecificHeader = () => {
-  switch (modeConfig.mode) {
-    case 'operator':
-      return {
-        links: [
-          { href: "/admin", label: "Platform Admin" },
-          { href: "/admin/users", label: "Users" },
-          { href: "/admin/projects", label: "Projects" },
-          { href: "/admin/metrics", label: "Metrics" },
-        ],
-      };
-    case 'console':
-      return {
-        links: [
-          { href: "/console", label: "Dashboard" },
-          { href: "/console/projects", label: "My Projects" },
-          { href: "/console/api-keys", label: "API Keys" },
-          { href: "/console/generations", label: "Generations" },
-        ],
-      };
-    case 'project':
-    default:
-      return {
-        links: [
-          { href: "/", label: "Home" },
-          { href: "/example-pages/use-cases", label: "Use Cases" },
-          { href: "/example-pages/landing-pages", label: "Landing Pages" },
-          { href: "/example-pages/components", label: "Components" },
-          { href: "/example-pages", label: "All examples" },
-        ],
-      };
-  }
-};
-
-const getModeSpecificTitle = () => {
-  switch (modeConfig.mode) {
-    case 'operator':
-      return "Dev Kit for AI - Platform Admin";
-    case 'console':
-      return "Dev Kit for AI - Developer Console";
-    case 'project':
-    default:
-      return "Dev Kit for AI";
-  }
-};
+const deploymentConfig = hydrateDeploymentMode();
 
 const appConfig: AppConfig = {
   name: "Dev Kit for AI",
-  title: getModeSpecificTitle(),
+  title:
+    "Dev Kit for AI - Developer Toolkit for Building AI-powered SaaS Web Applications",
   description: "AI Project Starter & Boilerplate with Batteries Included.",
   logo: {
     text: "Dev Kit for AI",
     href: "/",
   },
-  header: getModeSpecificHeader(),
+  header: {
+    links: [
+      { href: "/example-pages/use-cases", label: "Use Cases" },
+      { href: "/example-pages/landing-pages", label: "Landing Pages" },
+      { href: "/example-pages/components", label: "Components" },
+      { href: "/example-pages", label: "All examples" },
+    ],
+  },
   footer: {
     title: "Dev Kit for AI",
     description:
@@ -103,7 +64,12 @@ const appConfig: AppConfig = {
       ],
     },
   },
-  mode: modeConfig,
+  mode: {
+    currentMode: deploymentConfig.mode,
+    operatorKey: deploymentConfig.secrets.operatorKey,
+    projectId: deploymentConfig.secrets.projectId,
+    projectKey: deploymentConfig.secrets.projectKey,
+  },
 };
 
 export default appConfig;

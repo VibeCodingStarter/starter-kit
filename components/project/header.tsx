@@ -5,46 +5,16 @@ import Link from "next/link";
 import appConfig from "@/config/app.config";
 import CTAButton from "@/components/generic/cta-button";
 import { ThemeSwitcher } from "../theme-switcher";
-import { useDeploymentMode } from "@/lib/auth-context";
 
 interface HeaderProps {
   links?: Array<{ href: string; label: string }>;
 }
 
-const getModeSpecificLinks = (mode: string) => {
-  switch (mode) {
-    case "operator":
-      return [
-        { href: "/admin", label: "Platform Admin" },
-        { href: "/admin/users", label: "Users" },
-        { href: "/admin/projects", label: "Projects" },
-        { href: "/admin/metrics", label: "Metrics" },
-      ];
-    case "console":
-      return [
-        { href: "/console", label: "Dashboard" },
-        { href: "/console/projects", label: "My Projects" },
-        { href: "/console/api-keys", label: "API Keys" },
-        { href: "/console/generations", label: "Generations" },
-      ];
-    case "project":
-    default:
-      return [
-        { href: "/", label: "Home" },
-        { href: "/example-pages/use-cases", label: "Use Cases" },
-        { href: "/example-pages/landing-pages", label: "Landing Pages" },
-        { href: "/example-pages/components", label: "Components" },
-        { href: "/example-pages", label: "All examples" },
-      ];
-  }
-};
-
 export default function Header({ links: linksProp }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const deploymentMode = useDeploymentMode();
 
-  // Use provided links or derive from deployment mode
-  const links = linksProp ?? getModeSpecificLinks(deploymentMode.mode);
+  // Use provided links or derive from appConfig
+  const links = linksProp ?? appConfig.header.links;
 
   return (
     <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
