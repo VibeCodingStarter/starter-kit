@@ -48,7 +48,7 @@ export default function StarterHero() {
           <div className="flex flex-wrap justify-center gap-4 text-sm font-medium text-gray-600 dark:text-gray-400">
             <div className="flex items-center gap-2">
               <Zap className="w-4 h-4 text-green-500" />
-              <span>100% Free & Open Source</span>
+              <span>Free Starter & Open Source</span>
             </div>
             <div className="flex items-center gap-2">
               <Code2 className="w-4 h-4 text-blue-500" />

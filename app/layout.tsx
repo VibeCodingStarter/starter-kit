@@ -3,14 +3,11 @@ import localFont from "next/font/local";
 import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import Header from "@/components/project/header";
-import Footer from "@/components/project/footer";
 import appConfig from "@/config/app.config";
 import { DevkitDoctor } from "@/components/devkit/devkit-doctor";
 import { AuthProvider, DeploymentModeProvider } from "@/lib/auth-context";
 import { hydrateDeploymentMode } from "@/lib/deployment-mode";
 import { getCurrentUser } from "@/lib/auth-server";
-import { isCurrentRoute } from "@/lib/server-utils";
 
 import "./globals.css";
 
@@ -35,9 +32,6 @@ export default async function RootLayout({
 
   // Fetch current user (async - server-side only)
   const user = await getCurrentUser();
-
-  // Check if current path is a console page (exclude Header/Footer for console)
-  const isConsolePage = await isCurrentRoute("/console");
 
   return (
     <html lang="en" className={geistSans.className} suppressHydrationWarning>
@@ -69,9 +63,8 @@ export default async function RootLayout({
                 </div>
               )}
 
-              {!isConsolePage && <Header />}
-              <main className="flex flex-1 flex-col">{children}</main>
-              {!isConsolePage && <Footer />}
+              {children}
+
               <Analytics />
               <SpeedInsights />
 

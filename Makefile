@@ -22,6 +22,8 @@ dev: install ## 🏃 Run the application (auto-starts backend if needed)
 	else \
 		echo "✅ Backend API is running locally"; \
 	fi
+	@echo "🧹 Cleaning previous build artifacts..."
+	@rm -rf .next
 	@echo "🚀 Starting user application in project mode..."
 	@npm run dev
 
@@ -38,10 +40,13 @@ check-cloud-api: ## 🌐 Check cloud backend API health
 .PHONY: verify
 verify: install ## ✅ Verify the application setup
 	@echo "🔍 Verifying application setup..."
+	@rm -rf .next
 	@npx tsc --noEmit && \
 		npm run lint && \
 		(npm audit || npm audit fix) && \
 		npm run build
+	@rm -rf .next
+	@echo "✅ Application setup verified successfully"
 
 .PHONY: git-ensure-clean
 git-ensure-clean: ## 🔒 Ensure working tree is clean before publishing

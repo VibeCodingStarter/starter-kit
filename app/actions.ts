@@ -28,7 +28,7 @@ async function storeTokensInCookies(tokens: TokenResponse): Promise<void> {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
-    maxAge: 60 * 15,
+    maxAge: 60 * 30, // 30 minutes
     path: "/",
   });
 
