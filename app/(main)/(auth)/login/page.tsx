@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import LoginForm from "./login-form";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { sanitizeReturnUrl } from "@/lib/return-url";
+import { getCurrentUser } from "@/lib/auth-server";
 
 export const metadata: Metadata = {
   title: "Login - Dev Kit for AI",
@@ -18,6 +20,30 @@ export default async function LoginPage(props: {
   const searchParams = await props.searchParams;
   const safeReturnUrl =
     sanitizeReturnUrl(searchParams.returnUrl ?? null) ?? undefined;
+
+  // Check if user is already logged in
+  const user = await getCurrentUser();
+  if (user) {
+    // If returnUrl is provided, redirect there
+    if (safeReturnUrl) {
+      redirect(safeReturnUrl);
+    }
+
+    // Otherwise, redirect based on user role
+    switch (user.role) {
+      case "platform_operator":
+        redirect("/portal");
+        break;
+      case "developer":
+        redirect("/console");
+        break;
+      case "end_user":
+        redirect("/dashboard");
+        break;
+      default:
+        redirect("/dashboard");
+    }
+  }
 
   return (
     <>

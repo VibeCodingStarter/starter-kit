@@ -1,10 +1,30 @@
 # Changelog
 
-## 3 (2025-11-20)
+### v1.4.0 [2025-11-22]
+
+Improved user experience with tooltip component support and enhanced login flow with automatic role-based redirects.
+
+**Based on `devkit4ai/user-app/v1.4.0` and `devkit4ai/backend-api/v1.2.0` releases**
+
+#### Added
+- Added `Tooltip`, `TooltipTrigger`, `TooltipContent`, and `TooltipProvider` components based on Radix UI primitives
+- Added `@radix-ui/react-tooltip` dependency for tooltip functionality
+- Added automatic redirect logic on login page for already authenticated users with role-based destination routing
+
+#### Changed
+- Refactored `quick-start.tsx` component with improved code formatting and readability
+- Updated login page to check authentication status and redirect authenticated users to appropriate dashboards
+
+#### Fixed
+- Fixed code formatting inconsistencies in `quick-start.tsx` component
+
+### v1.3.0 [2025-11-20]
 
 Improved theme switcher UI/UX and enhanced dropdown menu styling for better accessibility and visual consistency.
 
-### Changed
+**Based on `devkit4ai/user-app/v1.3.0` and `devkit4ai/backend-api/v1.2.0` releases**
+
+#### Changed
 - Updated theme switcher trigger to use inline button styles instead of `Button` component for consistent theming
 - Added dropdown menu open state management to automatically close menu after theme selection
 - Enhanced dropdown menu styling with explicit color definitions for better dark mode support
@@ -15,22 +35,22 @@ Improved theme switcher UI/UX and enhanced dropdown menu styling for better acce
 - Adjusted dropdown menu spacing and sizing for better visual hierarchy
 - Extended JWT token expiration from 15 to 30 minutes for improved user experience
 
-### Removed
+#### Removed
 - Removed unused `Circle` icon import from `components/ui/dropdown-menu.tsx`
 - Removed unnecessary `Button` import from `components/theme-switcher.tsx`
 
-## 2 (2025-11-19)
+### v1.2.0 [2025-11-19]
 
 Restructured application layout to support new main content area with improved component organization.
 
-### Changed
+#### Changed
 - Refactored root layout structure by removing conditional Header and Footer rendering for console pages
 - Updated root layout to render main content directly without conditional wrapper logic
 - Simplified layout component by removing `isCurrentRoute()` dependency and server utility imports
 - Updated `Makefile` verify target to clean `.next` build directory before and after verification
 - Added success message to verify target for confirmation of completed setup verification
 
-### Removed
+#### Removed
 - Deleted legacy authentication layout structure in `app/(auth)/` directory
 - Removed authentication-related pages: `login/page.tsx`, `login/login-form.tsx`, `register/page.tsx`
 - Deleted example pages directory structure: `app/example-pages/` and all contained pages
@@ -40,9 +60,9 @@ Restructured application layout to support new main content area with improved c
 - Deleted `lib/server-utils.ts` module containing deprecated `getCurrentPathname()` and `isCurrentRoute()` functions
 - These functions were superseded by direct Next.js header handling in server components
 
-## 1 (2025-11-17)
+### v1.0.0 [2025-11-17]
 
-### Changed
+#### Changed
 - Refactored header component to use centralized app configuration instead of deployment mode context, simplifying header link management
 - Updated app configuration to integrate with deployment mode system via `hydrateDeploymentMode()` from `lib/deployment-mode.ts`
 - Renamed `ModeConfig.mode` to `ModeConfig.currentMode` for clarity in configuration types
@@ -50,7 +70,7 @@ Restructured application layout to support new main content area with improved c
 - Updated configuration structure to separate static values from deployment mode configuration
 - Enhanced configuration documentation with detailed interface definitions and usage examples
 
-### Removed
+#### Removed
 - Removed `config/mode.config.ts` module, consolidating mode configuration into deployment mode system
 - Removed `useDeploymentMode()` hook usage from header component
 - Removed `getModeSpecificLinks()` and `getModeSpecificTitle()` helper functions from app configuration
