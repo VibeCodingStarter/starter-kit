@@ -23,7 +23,6 @@ The **Starter Kit** is an open-source Next.js template that helps developers bui
 ### Step 1. Clone and Install
 
 ```bash
-# Clone the repository
 git clone https://github.com/VibeCodingStarter/starter-kit.git my-project
 cd my-project
 
@@ -36,6 +35,20 @@ cp .env.example .env.local
 # Run development server
 npm run dev
 ```
+
+One liner for Mac/Linux:
+
+```bash
+printf "Project name (default: cool-project): " && read PROJECT_NAME && PROJECT_NAME=\${PROJECT_NAME:-cool-project} && git clone https://github.com/VibeCodingStarter/starter-kit.git $PROJECT_NAME && cd $PROJECT_NAME && npm install && npm run dev
+```
+
+One liner for Windows (PowerShell):
+
+```powershell
+$PROJECT_NAME = Read-Host "Project name (default: cool-project)"; if (!$PROJECT_NAME) { $PROJECT_NAME = "cool-project" }; git clone https://github.com/VibeCodingStarter/starter-kit.git $PROJECT_NAME; cd $PROJECT_NAME; npm install; npm run dev
+```
+
+> Use Copy button in code blocks to copy commands easily. Paste them in your terminal to execute. It asks for a project name, defaults to `cool-project` if left blank. Works on Mac, Linux, and Windows (PowerShell.)
 
 ### Step 2. Get Your Credentials
 
