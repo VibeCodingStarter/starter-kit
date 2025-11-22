@@ -18,6 +18,48 @@ The **Starter Kit** is an open-source Next.js template that helps developers bui
 
 ---
 
+## 🚀 Quick Start
+
+### Step 1. Clone and Install
+
+```bash
+# Clone the repository
+git clone https://github.com/VibeCodingStarter/starter-kit.git my-project
+cd my-project
+
+# Install dependencies
+npm install
+
+# Create .env file
+cp .env.example .env.local
+
+# Run development server
+npm run dev
+```
+
+### Step 2. Get Your Credentials
+
+1. Sign up for a free account at [VibeCoding.ad](https://vibecoding.ad/register/developer) or [DevKit4AI.com](https://devkit4ai.com/register/developer)
+
+2. Right after registering, you'll see your **Developer Key** in the dashboard
+
+- **Developer Key**
+- **Project ID**
+- **Project API Key**
+
+3. Update your `.env.local` file with these values
+
+### Step 3. Explore and Customize
+
+1. Open [http://localhost:3004](http://localhost:3004) to see the starter kit in action
+2. Explore example pages at `/example-pages`
+3. Customize branding in `config/app.config.ts`
+4. Add your features using the component library in `components/ui/`
+
+Read the full documentation at [docs.devkit4ai.com](https://docs.devkit4ai.com) for detailed guides and API references.
+
+---
+
 ## ✨ Features
 
 ### 🔐 Authentication & User Management
@@ -49,7 +91,7 @@ The **Starter Kit** is an open-source Next.js template that helps developers bui
 - Multi-tenancy support
 
 ### 📊 Cloud Admin Dashboard
-- **Project management** via [Cloud Admin](https://vibecoding.ad/console)
+- **Project management** via **[Cloud Admin](https://vibecoding.ad/console)**
 - API key generation and management
 - User analytics and monitoring
 - Usage tracking and limits
@@ -60,63 +102,6 @@ The **Starter Kit** is an open-source Next.js template that helps developers bui
 - Dashboard layouts
 - Use case demonstrations
 - Marketing page templates
-
----
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- **Node.js** 18+ 
-- **npm** or **yarn** or **pnpm**
-- **Dev Kit for AI account** (sign up at [vibecoding.ad](https://vibecoding.ad/register/developer) or [devkit4ai.com](https://devkit4ai.com/register/developer))
-
-### 1. Get Your Credentials
-
-Sign up for a free account at [vibecoding.ad/register/developer](https://vibecoding.ad/register/developer) to get:
-- **Developer Key** (starts with `dk_`)
-- **Project ID** (UUID format)
-- **Project API Key**
-
-### 2. Clone and Install
-
-```bash
-# Clone the repository
-git clone https://github.com/VibeCodingStarter/starter-kit.git
-cd starter-kit
-
-# Install dependencies
-npm install
-```
-
-### 3. Configure Environment
-
-Create a `.env.local` file in the root directory:
-
-```bash
-# Deployment mode (always "project" for starter kit)
-DEVKIT4AI_MODE=project
-
-# Cloud API URL (choose one)
-NEXT_PUBLIC_API_URL=https://api.vibecoding.ad
-# NEXT_PUBLIC_API_URL=https://api.devkit4ai.com
-
-# Your credentials from Cloud Admin
-DEVKIT4AI_DEVELOPER_KEY=dk_your_developer_key_here
-DEVKIT4AI_PROJECT_ID=your-project-uuid-here
-DEVKIT4AI_PROJECT_KEY=your_project_api_key_here
-
-# Optional: Environment identifier
-ENVIRONMENT=local
-```
-
-### 4. Run Development Server
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3004](http://localhost:3004) in your browser.
 
 ---
 
