@@ -36,19 +36,19 @@ cp .env.example .env.local
 npm run dev
 ```
 
-One liner for Mac/Linux:
+One-liner for Mac/Linux:
 
 ```bash
-printf "Project name (default: cool-project): " && read PROJECT_NAME && PROJECT_NAME=\${PROJECT_NAME:-cool-project} && git clone https://github.com/VibeCodingStarter/starter-kit.git $PROJECT_NAME && cd $PROJECT_NAME && npm install && npm run dev
+printf "Project name (default: cool-project): " && read PROJECT_NAME && PROJECT_NAME=${PROJECT_NAME:-cool-project} && git clone https://github.com/VibeCodingStarter/starter-kit.git $PROJECT_NAME && cd $PROJECT_NAME && npm install && cp .env.example .env.local && npm run dev
 ```
 
-One liner for Windows (PowerShell):
+One-liner for Windows (PowerShell):
 
 ```powershell
-$PROJECT_NAME = Read-Host "Project name (default: cool-project)"; if (!$PROJECT_NAME) { $PROJECT_NAME = "cool-project" }; git clone https://github.com/VibeCodingStarter/starter-kit.git $PROJECT_NAME; cd $PROJECT_NAME; npm install; npm run dev
+$PROJECT_NAME = Read-Host "Project name (default: cool-project)"; if (!$PROJECT_NAME) { $PROJECT_NAME = "cool-project" }; git clone https://github.com/VibeCodingStarter/starter-kit.git $PROJECT_NAME; cd $PROJECT_NAME; npm install; Copy-Item .env.example .env.local; npm run dev
 ```
 
-> Use Copy button in code blocks to copy commands easily. Paste them in your terminal to execute. It asks for a project name, defaults to `cool-project` if left blank. Works on Mac, Linux, and Windows (PowerShell.)
+> **Quick setup:** Copy the one-liner above for your platform and paste it into your terminal. It will prompt for a project name (press Enter to use `cool-project` as the default), then clone the repository, install dependencies, and start the development server.
 
 ### Step 2. Get Your Credentials
 
