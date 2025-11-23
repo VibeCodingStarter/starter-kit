@@ -1,5 +1,17 @@
 # Changelog
 
+### v1.5.0 [2025-11-23]
+
+Simplified dashboard page and streamlined environment configuration documentation.
+
+#### Changed
+- Simplified `.env.example` with clearer environment variable documentation
+- Simplified dashboard layout by removing stats grid displaying project count and API key count for developers
+
+#### Removed
+- Removed imports for `fetchProjects()` and `fetchProjectApiKeys()` server actions from dashboard page
+- Removed project count and API key count display widgets from dashboard
+
 ### v1.4.0 [2025-11-22]
 
 Improved user experience with tooltip component support and enhanced login flow with automatic role-based redirects.

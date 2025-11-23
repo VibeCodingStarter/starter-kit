@@ -4,10 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Shield, Code2, Users } from "lucide-react";
 import Link from "next/link";
-import {
-  fetchProjects,
-  fetchProjectApiKeys,
-} from "@/app/(console)/console/actions";
 
 function formatRole(role: string): string {
   const roleMap: Record<string, string> = {
@@ -28,22 +24,6 @@ function formatDate(dateString: string): string {
 
 export default async function DashboardPage() {
   const user = await requireAuth();
-
-  // Fetch stats for developers
-  let projectCount = 0;
-  let apiKeyCount = 0;
-
-  if (user.role === "developer") {
-    const projects = await fetchProjects();
-    projectCount = projects.length;
-
-    // Fetch API keys for all projects
-    const apiKeyPromises = projects.map((project) =>
-      fetchProjectApiKeys(project.id)
-    );
-    const apiKeyArrays = await Promise.all(apiKeyPromises);
-    apiKeyCount = apiKeyArrays.reduce((total, keys) => total + keys.length, 0);
-  }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -104,16 +84,6 @@ export default async function DashboardPage() {
               <p className="text-sm text-muted-foreground mb-4">
                 Manage your projects, API keys, and end users.
               </p>
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="text-center">
-                  <p className="text-2xl font-bold">{projectCount}</p>
-                  <p className="text-xs text-muted-foreground">Projects</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl font-bold">{apiKeyCount}</p>
-                  <p className="text-xs text-muted-foreground">API Keys</p>
-                </div>
-              </div>
               <div className="space-y-2">
                 <Button variant="outline" asChild className="w-full">
                   <Link href="/console" className="font-semibold">
