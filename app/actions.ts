@@ -16,7 +16,6 @@ import type {
 const JWT_COOKIE_NAME = "devkit4ai-token";
 const REFRESH_TOKEN_COOKIE_NAME = "devkit4ai-refresh-token";
 const AUTH_REQUEST_TIMEOUT = 10000; // 10 seconds
-const FALLBACK_OPERATOR_ROLE = "platform_operator";
 
 /**
  * Helper to store JWT tokens in secure httpOnly cookies
@@ -60,6 +59,7 @@ export async function backendRegisterAction(formData: FormData): Promise<{
   const email = formData.get("email")?.toString().trim();
   const password = formData.get("password")?.toString() ?? "";
   const fullName = formData.get("full_name")?.toString().trim();
+  const role = formData.get("role")?.toString() ?? "developer"; // Default to developer for backward compatibility
 
   if (!email) {
     return { success: false, error: "Email is required." };
@@ -89,10 +89,18 @@ export async function backendRegisterAction(formData: FormData): Promise<{
 
   const deploymentConfig = hydrateDeploymentMode();
 
-  if (deploymentConfig.mode === "project") {
+  // Role-specific deployment mode validation
+  if (role === "developer" && deploymentConfig.mode === "project") {
     return {
       success: false,
       error: "Developer registration is not available in project mode.",
+    };
+  }
+
+  if (role === "end_user" && deploymentConfig.mode === "operator") {
+    return {
+      success: false,
+      error: "End user registration is not available in operator mode.",
     };
   }
 
@@ -103,16 +111,64 @@ export async function backendRegisterAction(formData: FormData): Promise<{
     };
   }
 
-  const operatorKey =
-    deploymentConfig.headers["X-Operator-Key"] ??
-    deploymentConfig.secrets.operatorKey ??
-    null;
+  // Build headers based on role
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "X-User-Role": role,
+  };
 
-  if (!operatorKey) {
-    return {
-      success: false,
-      error: "Operator key is not configured for this deployment.",
-    };
+  if (role === "developer") {
+    // Developer registration requires operator key
+    const operatorKey =
+      deploymentConfig.headers["X-Operator-Key"] ??
+      deploymentConfig.secrets.operatorKey ??
+      null;
+
+    if (!operatorKey) {
+      return {
+        success: false,
+        error: "Operator key is not configured for this deployment.",
+      };
+    }
+
+    headers["X-Operator-Key"] = operatorKey;
+  } else if (role === "end_user") {
+    // End user registration requires developer key
+    const developerKey =
+      deploymentConfig.headers["X-Developer-Key"] ??
+      deploymentConfig.secrets.developerKey ??
+      null;
+
+    if (!developerKey) {
+      return {
+        success: false,
+        error: "Developer key is not configured for this deployment.",
+      };
+    }
+
+    headers["X-Developer-Key"] = developerKey;
+
+    // Project mode requires additional headers
+    if (deploymentConfig.mode === "project") {
+      const projectId =
+        deploymentConfig.headers["X-Project-ID"] ??
+        deploymentConfig.secrets.projectId ??
+        null;
+      const apiKey =
+        deploymentConfig.headers["X-API-Key"] ??
+        deploymentConfig.secrets.projectKey ??
+        null;
+
+      if (!projectId || !apiKey) {
+        return {
+          success: false,
+          error: "Project configuration is incomplete.",
+        };
+      }
+
+      headers["X-Project-ID"] = projectId;
+      headers["X-API-Key"] = apiKey;
+    }
   }
 
   if (!deploymentConfig.backendApiUrl) {
@@ -130,12 +186,7 @@ export async function backendRegisterAction(formData: FormData): Promise<{
         `${deploymentConfig.backendApiUrl}/api/v1/auth/register`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-User-Role":
-              deploymentConfig.headers["X-User-Role"] ?? FALLBACK_OPERATOR_ROLE,
-            "X-Operator-Key": operatorKey,
-          },
+          headers,
           cache: "no-store",
           body: JSON.stringify(
             fullName
@@ -219,50 +270,91 @@ export async function backendRegisterAction(formData: FormData): Promise<{
     }
 
     const registrationData = (await response.json()) as RegistrationResponse;
-    const provisioning = registrationData?.provisioning;
 
-    if (process.env.NODE_ENV === "development") {
-      console.log("[backendRegisterAction] Received provisioning data:", {
-        has_provisioning: !!provisioning,
-        has_project_id: !!provisioning?.project_id,
-        has_developer_key: !!provisioning?.developer_key,
-        has_api_key: !!provisioning?.api_key,
+    // Store JWT tokens for immediate authentication (both roles)
+    if (registrationData.access_token && registrationData.refresh_token) {
+      await storeTokensInCookies({
+        access_token: registrationData.access_token,
+        refresh_token: registrationData.refresh_token,
+        token_type: registrationData.token_type ?? "bearer",
       });
+
+      if (process.env.NODE_ENV === "development") {
+        console.log(
+          "[backendRegisterAction] Stored JWT tokens for user",
+          registrationData.id
+        );
+      }
     }
 
-    if (
-      !provisioning?.project_id ||
-      !provisioning?.developer_key ||
-      !provisioning?.api_key
-    ) {
+    // Handle developer-specific provisioning
+    if (role === "developer") {
+      const provisioning = registrationData?.provisioning;
+
+      if (process.env.NODE_ENV === "development") {
+        console.log("[backendRegisterAction] Received provisioning data:", {
+          has_provisioning: !!provisioning,
+          has_project_id: !!provisioning?.project_id,
+          has_developer_key: !!provisioning?.developer_key,
+          has_api_key: !!provisioning?.api_key,
+        });
+      }
+
+      if (
+        !provisioning?.project_id ||
+        !provisioning?.developer_key ||
+        !provisioning?.api_key
+      ) {
+        return {
+          success: false,
+          error: "Provisioning data is missing from the registration response.",
+        };
+      }
+
+      // Store provisioning data in secure httpOnly cookie
+      if (process.env.NODE_ENV === "development") {
+        console.log(
+          "[backendRegisterAction] About to store provisioning bundle"
+        );
+      }
+
+      await storeProvisioningBundle({
+        project_id: provisioning.project_id?.toString(),
+        developer_key: provisioning.developer_key,
+        api_key: provisioning.api_key,
+      });
+
+      if (process.env.NODE_ENV === "development") {
+        console.log(
+          "[backendRegisterAction] Successfully stored provisioning bundle"
+        );
+      }
+
+      // Developer registration: redirect to success page with provisioning in URL
+      // We pass minimal data in URL because cookies set in Server Actions
+      // may not be immediately available in the next page render
+      const successUrl = new URL(
+        "/register/developer/success",
+        process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+      );
+      successUrl.searchParams.set("email", email);
+      
       return {
-        success: false,
-        error: "Provisioning data is missing from the registration response.",
+        success: true,
+        redirectTo: successUrl.pathname + successUrl.search,
+      };
+    } else if (role === "end_user") {
+      // End user registration: redirect to dashboard (already authenticated via tokens)
+      return {
+        success: true,
+        redirectTo: "/dashboard",
       };
     }
 
-    // Store provisioning data in secure httpOnly cookie
-    if (process.env.NODE_ENV === "development") {
-      console.log("[backendRegisterAction] About to store provisioning bundle");
-    }
-
-    await storeProvisioningBundle({
-      project_id: provisioning.project_id?.toString(),
-      developer_key: provisioning.developer_key,
-      api_key: provisioning.api_key,
-    });
-
-    if (process.env.NODE_ENV === "development") {
-      console.log(
-        "[backendRegisterAction] Provisioning bundle stored successfully"
-      );
-    }
-
-    // Return success with redirect path instead of calling redirect()
-    // This allows the cookie to be properly committed before navigation
+    // Fallback (shouldn't reach here)
     return {
       success: true,
-      redirectTo: "/register/developer/success",
+      redirectTo: "/login",
     };
   } catch (error) {
     if (isRedirectError(error)) {
@@ -270,7 +362,7 @@ export async function backendRegisterAction(formData: FormData): Promise<{
     }
 
     if (process.env.NODE_ENV === "development") {
-      console.error("[backendRegisterAction] Unexpected error", error);
+      console.error("[backendRegisterAction] Unexpected error:", error);
     }
 
     return {
@@ -278,7 +370,7 @@ export async function backendRegisterAction(formData: FormData): Promise<{
       error:
         error instanceof Error
           ? error.message
-          : "Registration failed. Please try again.",
+          : "Registration failed due to an unexpected error.",
     };
   }
 }

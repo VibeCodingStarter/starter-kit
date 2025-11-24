@@ -15,11 +15,11 @@ function getRegistrationLink(mode: string): string {
     case "operator":
       return "/register/developer";
     case "console":
-      return "/register/developer";
+      return "/register";
     case "project":
-      return "/register/developer"; // TODO: end-user registration flow (TASK_008)
+      return "/register";
     default:
-      return "/register/developer";
+      return "/register";
   }
 }
 

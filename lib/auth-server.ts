@@ -249,7 +249,6 @@ export const getCurrentUser = cache(async (): Promise<UserWithRole | null> => {
  *
  * @returns Authenticated user with role
  * @throws Redirects to /login?returnUrl=<current-path> if not authenticated
- * @throws Redirects to /verify-email if user is not active
  *
  * @example
  * ```tsx
@@ -270,11 +269,6 @@ export async function requireAuth(): Promise<UserWithRole> {
     const safePath = sanitizeReturnUrl(currentPath) ?? "/";
     const returnUrl = encodeURIComponent(safePath);
     redirect(`/login?returnUrl=${returnUrl}`);
-  }
-
-  // Redirect to verify email if user is not active
-  if (!user.is_active) {
-    redirect(`/verify-email?email=${encodeURIComponent(user.email)}`);
   }
 
   return user;

@@ -28,9 +28,7 @@ const serializeBundle = (bundle: StoredBundle): string =>
 
 const deserializeBundle = (value: string): StoredBundle | null => {
   if (!value || value.trim() === "") {
-    if (process.env.NODE_ENV === "development") {
-      console.error("[provisioning-store] Empty cookie value");
-    }
+    // This is expected when cookies from Server Actions aren't immediately available
     return null;
   }
 
@@ -192,9 +190,7 @@ export async function getProvisioningBundle(): Promise<ProvisioningData | null> 
   const stored = cookieStore.get(COOKIE_NAME);
 
   if (!stored) {
-    if (process.env.NODE_ENV === "development") {
-      console.log("[provisioning-store] No provisioning cookie found");
-    }
+    // This is expected when cookies from Server Actions aren't immediately available
     return null;
   }
 
@@ -212,9 +208,7 @@ export async function getProvisioningBundle(): Promise<ProvisioningData | null> 
 
   const deserialized = deserializeBundle(stored.value);
   if (!deserialized) {
-    if (process.env.NODE_ENV === "development") {
-      console.error("[provisioning-store] Failed to deserialize cookie");
-    }
+    // This is expected when cookies from Server Actions aren't immediately available
     return null;
   }
 

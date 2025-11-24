@@ -15,6 +15,9 @@ export interface RegistrationResponse {
   is_active: boolean;
   created_at: string;
   provisioning?: ProvisioningData;
+  access_token?: string;
+  refresh_token?: string;
+  token_type?: string;
 }
 
 export interface TokenResponse {

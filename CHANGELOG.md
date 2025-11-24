@@ -1,5 +1,29 @@
 # Changelog
 
+### v1.6.0 [2025-11-24]
+
+Implemented unified registration flow supporting both developer and end-user roles with JWT token-based authentication.
+
+#### Added
+- Added support for end-user registration through the project mode registration flow
+- Added JWT access and refresh tokens to registration response for immediate user authentication
+- Added `dotenv-cli` development dependency for environment variable management
+- Added role-specific registration logic to handle separate developer and end-user flows
+
+#### Changed
+- Simplified registration link routing to use consolidated `/register` endpoint for all deployment modes
+- Updated `backendRegisterAction()` to dynamically set authentication headers based on user role
+- Modified registration response handling to store JWT tokens in secure httpOnly cookies for both user roles
+- Refactored developer-specific provisioning bundle logic to handle conditionally based on user role
+- Improved developer-specific provisioning flow with separate success redirect
+- Updated error messages for improved clarity and user feedback
+- Refactored provisioning store deserialization error handling to reduce unnecessary logging
+- Updated user authentication requirements in `requireAuth()` to remove email verification check
+
+#### Removed
+- Deleted deprecated `app/(main)/register/page.tsx` in favor of unified registration endpoint
+- Removed email verification redirect logic from `requireAuth()` function
+
 ### v1.5.0 [2025-11-23]
 
 Simplified dashboard page and streamlined environment configuration documentation.
