@@ -1,5 +1,15 @@
 # Changelog
 
+### v1.7.0 [2025-11-26]
+
+Added UI component primitives for alert dialogs, select dropdowns, and textarea inputs to expand component library.
+
+#### Added
+- Added `AlertDialog` component wrapper based on Radix UI `@radix-ui/react-alert-dialog` primitive
+- Added `Select` component with trigger, scrolling, and value management based on Radix UI `@radix-ui/react-select` primitive
+- Added `Textarea` component for multi-line text input with consistent styling
+- Added `@radix-ui/react-alert-dialog` and `@radix-ui/react-select` dependencies
+
 ### v1.6.0 [2025-11-24]
 
 Implemented unified registration flow supporting both developer and end-user roles with JWT token-based authentication.
