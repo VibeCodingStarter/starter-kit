@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Sparkles, 
-  Shield, 
-  Database, 
-  Settings, 
+import {
+  Sparkles,
+  Shield,
+  Database,
+  Settings,
   ChevronRight,
   Eye,
   Download,
@@ -20,8 +20,8 @@ export default function BuiltInFeatures() {
   const deploymentMode = useDeploymentMode();
   const isLocal = deploymentMode.mode === "project";
   const getStartedLink = isLocal ? "/dashboard" : "/console";
-  const downloadLink = isLocal 
-    ? "https://github.com/VibeCodingStarter/starter-kit/archive/main.zip" 
+  const downloadLink = isLocal
+    ? "https://github.com/VibeCodingStarter/starter-kit/archive/main.zip"
     : "https://docs.devkit4ai.com/quickstart";
   const downloadText = isLocal ? "Download Starter" : "Quickstart Guide";
   const featureCategories = [
@@ -156,7 +156,7 @@ export default function BuiltInFeatures() {
             Everything You Need, Every Step of the Way
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Start with our <strong>free open-source frontend</strong> connected to Cloud Backend and Admin. 
+            Start with our <strong>free open-source frontend</strong> connected to Cloud Backend and Admin.
             Scale with Cloud+ for multiple projects, or go self-hosted for complete ownership.
           </p>
         </div>
@@ -171,7 +171,7 @@ export default function BuiltInFeatures() {
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{category.title}</h3>
                 </div>
-                
+
                 <div className="space-y-4">
                   {category.features.map((feature, featureIndex) => (
                     <div key={featureIndex} className="flex items-start justify-between p-4 bg-white dark:bg-gray-700 rounded-lg border border-gray-100 dark:border-gray-600">
@@ -204,7 +204,7 @@ export default function BuiltInFeatures() {
               Start Free, Scale Smart, Own Everything
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
-              Begin with our <strong>free open-source frontend</strong> connected to cloud services. 
+              Begin with our <strong>free open-source frontend</strong> connected to cloud services.
               Scale with Cloud+ for multiple projects, or go self-hosted for complete control.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

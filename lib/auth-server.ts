@@ -207,13 +207,21 @@ export const getCurrentUser = cache(async (): Promise<UserWithRole | null> => {
         return null;
       }
 
+      // Extract project_id if present (for end users)
+      const projectId = userData.project_id ?? null;
+
+      // Extract full_name if present
+      const fullName = userData.full_name ?? null;
+
       // Return user with role (with type assertion after validation)
       return {
         id: userData.id,
         email: userData.email,
+        full_name: fullName,
         role: userData.role as "platform_operator" | "developer" | "end_user",
         is_active: userData.is_active,
         created_at: userData.created_at,
+        project_id: projectId,
       };
     } catch (fetchError) {
       clearTimeout(timeoutId);

@@ -210,15 +210,15 @@ describe('calculateShipping', () => {
   it('applies free shipping for orders over $100 in US', () => {
     expect(calculateShipping(120, 'US')).toBe(0);
   });
-  
+
   it('applies flat rate for orders under $100 in US', () => {
     expect(calculateShipping(50, 'US')).toBe(5.99);
   });
-  
+
   it('applies correct international shipping to Canada', () => {
     expect(calculateShipping(50, 'CA')).toBe(15.99);
   });
-  
+
   it('applies expedited shipping correctly', () => {
     expect(calculateShipping(50, 'US', true)).toBe(12.99);
   });
@@ -249,7 +249,7 @@ function UserProfile({ user }) {
   if (!user) {
     return <div>Loading user data...</div>;
   }
-  
+
   // Added error boundary for invalid user properties
   try {
     return (

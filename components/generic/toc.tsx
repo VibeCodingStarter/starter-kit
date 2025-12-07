@@ -20,7 +20,7 @@ interface TableOfContentsProps {
 
 /**
  * TableOfContents component that displays a sectioned list of page navigation links.
- * 
+ *
  * @component
  * @example
  * ```tsx
@@ -34,7 +34,7 @@ interface TableOfContentsProps {
  *     { id: "forms", label: "Forms" }
  *   ]
  * };
- * 
+ *
  * <TableOfContents items={tocItems} />
  * ```
  */
@@ -63,4 +63,4 @@ export default function TableOfContents({ items }: TableOfContentsProps) {
       </div>
     </div>
   );
-} 
+}

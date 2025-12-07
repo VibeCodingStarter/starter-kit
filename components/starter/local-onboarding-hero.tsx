@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  ArrowRight, 
-  Github, 
-  CheckCircle, 
-  Code2, 
+import {
+  ArrowRight,
+  Github,
+  CheckCircle,
+  Code2,
   Sparkles,
   Play,
   Terminal

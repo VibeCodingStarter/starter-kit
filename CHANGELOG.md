@@ -1,5 +1,26 @@
 # Changelog
 
+### v1.8.0 [2025-12-07]
+
+Enhanced user experience with personalized dashboard greetings and improved authentication for end-user projects.
+
+#### Added
+- Added `full_name` and `project_id` fields to `UserWithRole` interface for better user identification and project tracking
+- Added `full_name` field to `RegistrationResponse` interface to support personalized authentication responses
+
+#### Changed
+- Updated dashboard welcome message to display personalized greeting with user's full name when available
+- Enhanced `backendLoginAction()` to include `X-Project-ID` header for project mode end-user authentication
+- Updated `hydrateDeploymentMode()` integration in `backendLoginAction()` to extract project-specific headers
+- Modified `getCurrentUser()` to extract and return `full_name` and `project_id` from authentication responses
+- Restricted `DevkitDoctor` component visibility to project mode deployments only
+- Cleaned up trailing whitespace in multiple component files
+
+#### Removed
+- Removed `autoprefixer` dependency from production dependencies
+- Removed `@tailwindcss/postcss` dependency from development dependencies
+- Removed `typescript` and `vercel` dependencies from development dependencies
+
 ### v1.7.0 [2025-11-26]
 
 Added UI component primitives for alert dialogs, select dropdowns, and textarea inputs to expand component library.

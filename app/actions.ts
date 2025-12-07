@@ -338,7 +338,7 @@ export async function backendRegisterAction(formData: FormData): Promise<{
         process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
       );
       successUrl.searchParams.set("email", email);
-      
+
       return {
         success: true,
         redirectTo: successUrl.pathname + successUrl.search,
@@ -432,7 +432,7 @@ export async function backendLoginAction(
     };
   }
 
-  // Get backend API URL directly (no mode-specific configuration needed)
+  // Get backend API URL and deployment config
   const backendApiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   if (!backendApiUrl) {
@@ -441,6 +441,9 @@ export async function backendLoginAction(
       error: "Application is not properly configured. Please contact support.",
     };
   }
+
+  // Get deployment config to extract project-specific headers
+  const deploymentConfig = hydrateDeploymentMode();
 
   try {
     // Step 1: Authenticate user via /api/v1/auth/login (role-agnostic)
@@ -451,13 +454,27 @@ export async function backendLoginAction(
       AUTH_REQUEST_TIMEOUT
     );
 
+    // Build headers with optional X-Project-ID for project mode
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+
+    // Add X-Project-ID for project mode deployments (required for end user login)
+    if (deploymentConfig.mode === "project") {
+      const projectId =
+        deploymentConfig.headers["X-Project-ID"] ??
+        deploymentConfig.secrets.projectId ??
+        null;
+      if (projectId) {
+        headers["X-Project-ID"] = projectId;
+      }
+    }
+
     let response: Response;
     try {
       response = await fetch(`${backendApiUrl}/api/v1/auth/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify({
           email,
           password,

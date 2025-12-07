@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Eye, 
-  ExternalLink, 
-  Image as ImageIcon, 
-  MessageSquare, 
+import {
+  Eye,
+  ExternalLink,
+  Image as ImageIcon,
+  MessageSquare,
   BarChart3,
   Palette,
   ArrowRight,
@@ -29,7 +29,7 @@ export default function DemoShowcase() {
     {
       title: "AI Assistant Chat",
       description: "Interactive chat interface with AI assistant. Includes conversation history, typing indicators, and contextual responses.",
-      image: "/placeholder-chat.jpg", 
+      image: "/placeholder-chat.jpg",
       features: ["GPT-4 Integration", "Chat History", "Real-time UI", "Context Aware"],
       liveDemo: "/example-pages/landing-pages/ai-assistant",
       category: "Conversational AI",
@@ -67,7 +67,7 @@ export default function DemoShowcase() {
             See It In Action
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Explore fully functional demos that showcase the capabilities of your AI application starter. 
+            Explore fully functional demos that showcase the capabilities of your AI application starter.
             Each demo is built with the same components and patterns you&apos;ll use in your project.
           </p>
         </div>
@@ -80,8 +80,8 @@ export default function DemoShowcase() {
                 <div className="relative h-48 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 flex items-center justify-center">
                   <div className="text-6xl opacity-20">{demo.icon}</div>
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
-                    <Button 
-                      asChild 
+                    <Button
+                      asChild
                       className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       variant="secondary"
                     >
@@ -146,7 +146,7 @@ export default function DemoShowcase() {
               Explore More Examples
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
-              Browse our comprehensive collection of components, use cases, and implementation examples 
+              Browse our comprehensive collection of components, use cases, and implementation examples
               to understand the full potential of the Dev Kit for AI.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

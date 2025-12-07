@@ -17,7 +17,7 @@ export default function StarterHero() {
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="h-[40rem] w-[40rem] bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-3xl" />
       </div>
-      
+
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
         <div className="text-center space-y-8">
           {/* Badge */}
@@ -39,7 +39,7 @@ export default function StarterHero() {
               </span>
             </h1>
             <p className="mx-auto max-w-3xl text-xl sm:text-2xl text-gray-600 dark:text-gray-300 leading-relaxed">
-              <strong>Free, open-source</strong> starter template with pre-connected Cloud Backend and Cloud Admin. 
+              <strong>Free, open-source</strong> starter template with pre-connected Cloud Backend and Cloud Admin.
               Everything you need to launch your AI-powered SaaS, plus scaling and self-hosting options available.
             </p>
           </div>

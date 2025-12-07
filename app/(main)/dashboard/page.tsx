@@ -30,7 +30,11 @@ export default async function DashboardPage() {
       {/* Header Section */}
       <div className="mb-8">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold">Welcome to your Dashboard</h1>
+          <h1 className="text-3xl font-bold">
+            {user.full_name
+              ? `Welcome, ${user.full_name}`
+              : "Welcome to your Dashboard"}
+          </h1>
           <div className="flex flex-wrap items-center gap-3">
             <p className="text-muted-foreground">
               Signed in as <span className="font-medium">{user.email}</span>

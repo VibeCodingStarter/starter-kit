@@ -67,12 +67,12 @@ export default function DemoComponent() {
     <div>
       <h1>{appConfig.title}</h1>
       <p>{appConfig.description}</p>
-      
+
       {/* Access mode information */}
       {appConfig.mode && (
         <p>Current mode: {appConfig.mode.currentMode}</p>
       )}
-      
+
       {/* Use header links */}
       <nav>
         {appConfig.header.links.map((link) => (

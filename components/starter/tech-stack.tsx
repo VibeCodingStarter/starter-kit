@@ -2,11 +2,11 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  Globe, 
-  Shield, 
-  Cloud, 
-  Zap, 
+import {
+  Globe,
+  Shield,
+  Cloud,
+  Zap,
   Brain,
   Server,
   Palette,

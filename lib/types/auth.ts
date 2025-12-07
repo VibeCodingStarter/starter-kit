@@ -11,6 +11,7 @@ export interface ProvisioningData {
 export interface RegistrationResponse {
   id: string;
   email: string;
+  full_name?: string | null;
   role: string;
   is_active: boolean;
   created_at: string;
@@ -41,15 +42,17 @@ export interface RegistrationFormData {
 export interface UserWithRole {
   id: string;
   email: string;
-  role: 'platform_operator' | 'developer' | 'end_user';
+  full_name?: string | null;
+  role: "platform_operator" | "developer" | "end_user";
   is_active: boolean;
   created_at: string;
+  project_id?: string | null; // Project ID for end users
 }
 
 /**
  * Authentication error types
  */
-export type AuthError = 
+export type AuthError =
   | 'no_token'
   | 'invalid_token'
   | 'expired_token'

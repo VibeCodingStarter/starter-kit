@@ -3,9 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Image as ImageIcon, 
-  MessageSquare, 
+import {
+  Image as ImageIcon,
+  MessageSquare,
   Users,
   BarChart3,
   Shield,
@@ -124,7 +124,7 @@ export default function FeaturePreview() {
             Explore What&apos;s Built-In
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Your local environment includes all these features ready to use. 
+            Your local environment includes all these features ready to use.
             Click any demo to see them in action or examine the code.
           </p>
         </div>
@@ -208,7 +208,7 @@ export default function FeaturePreview() {
                     </Badge>
                   </div>
                 </div>
-                
+
                 <CardContent className="p-6">
                   <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                     {useCase.title}
@@ -216,7 +216,7 @@ export default function FeaturePreview() {
                   <p className="text-gray-600 dark:text-gray-400 mb-4">
                     {useCase.description}
                   </p>
-                  
+
                   <div className="flex flex-wrap gap-2 mb-4">
                     {useCase.tags.map((tag, tagIndex) => (
                       <Badge key={tagIndex} variant="outline" className="text-xs">

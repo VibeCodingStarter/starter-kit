@@ -421,7 +421,7 @@ export default function AIAnalyticsLandingPage() {
               <div
                 key={index}
                 className={`
-                  bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 
+                  bg-white dark:bg-gray-800 rounded-lg shadow-md p-8
                   ${
                     plan.highlighted
                       ? "ring-2 ring-indigo-600 dark:ring-indigo-400 shadow-xl"

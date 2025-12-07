@@ -68,11 +68,12 @@ export default async function RootLayout({
               <Analytics />
               <SpeedInsights />
 
-              {/* Show in development mode or when demo mode is enabled */}
-              {(process.env.NODE_ENV === "development" ||
-                process.env.NEXT_PUBLIC_DEMO_MODE === "true") && (
-                <DevkitDoctor />
-              )}
+              {/* Show in development mode or when demo mode is enabled (only in project mode) */}
+              {deploymentConfig.mode === "project" &&
+                (process.env.NODE_ENV === "development" ||
+                  process.env.NEXT_PUBLIC_DEMO_MODE === "true") && (
+                  <DevkitDoctor />
+                )}
             </ThemeProvider>
           </AuthProvider>
         </DeploymentModeProvider>

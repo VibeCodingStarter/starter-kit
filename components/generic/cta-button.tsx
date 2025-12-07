@@ -16,7 +16,7 @@ interface CTAButtonProps {
 
 /**
  * CTAButton component for call-to-action links styled as buttons.
- * 
+ *
  * @component
  * @example
  * ```tsx
