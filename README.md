@@ -6,9 +6,9 @@
 > Next.js + Tailwind CSS + Radix UI + Cloud API + Admin Console
 >
 
-Next.js boilerplate with everything you need to build AI-enabled SaaS applications **quickly**.
+Next.js boilerplate with everything you need to build AI-enabled SaaS applications, ⚡️ **quickly**.
 
-Right after cloning this Starter Kit repo, you get a fully functional web application with authentication, user management, AI integrations, and UI components. [Admin console](https://vibecoding.ad/console) and [Cloud API](https://api.vibecoding.ad) are pre-wired for you to manage your users and projects.
+Right after cloning _this Starter Kit_, you get a fully functional web application with **🔐 authentication**, **🧑‍💻 user management**, **🤖 AI integrations**, and **🎨 UI components**. [Admin console](https://vibecoding.ad/console) and [Cloud API](https://api.vibecoding.ad) are pre-wired for you to manage your users and projects.
 
 #### **Jump in now:** 🚀 [Quick Start Guide](https://docs.devkit4ai.com/quickstart) • 🧑‍💻 [Create Console Account](https://vibecoding.ad/register/developer) • 💼 [Upgrade for More Features](https://vibecoding.ad/#pricing)
 
@@ -107,14 +107,6 @@ Read the full documentation at [docs.devkit4ai.com](https://docs.devkit4ai.com) 
 - Dashboard layouts
 - Use case demonstrations
 - Marketing page templates
-
-## 🚀 Why Vibe Coding Starter Kit? 🤘🏽🤘🏽🤘🏽
-
-- 🧑‍💻 Clone the repo, wire up your credentials, and start shipping within minutes
-- 📦 Launch with user dashboards and the hosted Cloud API already wired together
-- 🤖 Leverage built-in AI integrations and production-ready feature blocks out of the box
-- 🚢 Deploy with a single click to bring up the backend, frontend, admin, and end-user dashboards
-- 🧰 Assemble polished experiences fast with the extensive built-in component library
 
 ## Environment Variables
 
