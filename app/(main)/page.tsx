@@ -1,10 +1,7 @@
 import LocalOnboardingHero from "@/components/starter/local-onboarding-hero";
-import LocalSetupGuide from "@/components/starter/local-setup-guide";
-import FeaturePreview from "@/components/starter/feature-preview";
-import TechStack from "@/components/starter/tech-stack";
-import QuickStart from "@/components/starter/quick-start";
-import DemoShowcase from "@/components/starter/demo-showcase";
-import PricingModel from "@/components/starter/pricing-model";
+import Features from "@/components/starter/features";
+import BuildAnything from "@/components/starter/build-anything";
+import LocalQuickStart from "@/components/starter/local-quick-start";
 
 export default function HomePage() {
   return (
@@ -12,23 +9,14 @@ export default function HomePage() {
       {/* Local Onboarding Hero */}
       <LocalOnboardingHero />
 
-      {/* Local Setup Guide */}
-      <LocalSetupGuide />
+      {/* Features Section */}
+      <Features />
 
-      {/* Feature Preview */}
-      <FeaturePreview />
+      {/* Build Anything Section */}
+      <BuildAnything />
 
-      {/* Quick Start Guide */}
-      <QuickStart />
-
-      {/* Demo Showcase */}
-      <DemoShowcase />
-
-      {/* Tech Stack Overview */}
-      <TechStack />
-
-      {/* Pricing Model */}
-      <PricingModel />
+      {/* Local Quick Start Section */}
+      <LocalQuickStart />
     </main>
   );
 }

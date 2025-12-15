@@ -24,7 +24,7 @@ export default function StarterHero() {
           <div className="flex justify-center">
             <Badge variant="secondary" className="px-4 py-2 text-sm font-medium">
               <Sparkles className="w-4 h-4 mr-2" />
-              Open Source & Free Starter
+              Starter Kit & Cloud Connected
             </Badge>
           </div>
 
@@ -32,10 +32,10 @@ export default function StarterHero() {
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight">
               <span className="block text-gray-900 dark:text-white">
-                Build AI Apps
+                Ship your startup
               </span>
               <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                In Minutes, Not Months
+                In minutes, not months
               </span>
             </h1>
             <p className="mx-auto max-w-3xl text-xl sm:text-2xl text-gray-600 dark:text-gray-300 leading-relaxed">
