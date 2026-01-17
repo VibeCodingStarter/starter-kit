@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import appConfig from "@/config/app.config";
-import CTAButton from "@/components/generic/cta-button";
 import { ThemeSwitcher } from "../theme-switcher";
+import { Rocket } from "lucide-react";
 
 interface HeaderProps {
   links?: Array<{ href: string; label: string }>;
@@ -30,7 +30,7 @@ export default function Header({ links: linksProp }: HeaderProps) {
                 {appConfig.logo.text}
               </Link>
             </div>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <div className="hidden md:ml-6 md:flex md:space-x-8">
               {links.map((link) => (
                 <Link
                   key={link.href}
@@ -45,14 +45,20 @@ export default function Header({ links: linksProp }: HeaderProps) {
 
           {/* Theme toggle and mobile menu button */}
           <div className="flex items-center space-x-4">
-            <div className="hidden sm:block">
+            <div className="hidden md:block">
               <ThemeSwitcher />
             </div>
-            <div className="hidden sm:block">
-              <CTAButton href="/dashboard">Get Started</CTAButton>
+            <div className="hidden md:block">
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200 hover:scale-105"
+              >
+                <Rocket className="w-4 h-4" />
+                Dashboard
+              </Link>
             </div>
             {/* Mobile menu button */}
-            <div className="sm:hidden ml-2">
+            <div className="md:hidden ml-2">
               <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
@@ -101,7 +107,7 @@ export default function Header({ links: linksProp }: HeaderProps) {
 
         {/* Mobile menu */}
         {isOpen && (
-          <div className="sm:hidden" id="mobile-menu">
+          <div className="md:hidden" id="mobile-menu">
             <div className="pt-2 pb-3 space-y-1">
               {links.map((link) => (
                 <Link
@@ -115,9 +121,13 @@ export default function Header({ links: linksProp }: HeaderProps) {
             </div>
             {/* Add CTA button to mobile menu */}
             <div className="pt-2 pb-3 pl-3">
-              <CTAButton href="https://github.com/VibeCodingStarter/starter-kit">
-                Get Started
-              </CTAButton>
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium text-sm hover:shadow-lg transition-all duration-200 hover:scale-105"
+              >
+                <Rocket className="w-4 h-4" />
+                Dashboard
+              </Link>
             </div>
             <div className="pt-2 pb-3 pl-3">
               <ThemeSwitcher />

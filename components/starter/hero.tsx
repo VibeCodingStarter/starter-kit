@@ -52,7 +52,7 @@ export default function Hero() {
               asChild
               variant="outline"
               size="lg"
-              className="w-full sm:w-auto border-gray-700 text-white hover:bg-white/10 font-medium px-8 h-12"
+              className="w-full sm:w-auto border-gray-700 bg-transparent text-white hover:bg-white/10 hover:text-white font-medium px-8 h-12"
             >
               <Link href="https://docs.devkit4ai.com" target="_blank">
                 Documentation

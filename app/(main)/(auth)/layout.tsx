@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function AuthLayout({
   children,
 }: {
@@ -24,9 +26,28 @@ export default function AuthLayout({
         </div>
 
         {/* Right side - Auth form */}
-        <div className="flex w-full flex-1 items-center justify-center bg-background p-6 sm:p-10 lg:p-12">
+        <div className="flex w-full flex-1 flex-col items-center justify-center bg-background p-6 sm:p-10 lg:p-12">
           <div className="w-full max-w-md">
             <div className="space-y-6">{children}</div>
+          </div>
+
+          {/* Footer links */}
+          <div className="mt-8 flex flex-col items-center gap-2 text-center text-sm text-muted-foreground">
+            <Link
+              href="/"
+              className="hover:text-foreground hover:underline transition-colors"
+            >
+              ← Back to Home
+            </Link>
+            <span>
+              Need help?{" "}
+              <a
+                href="mailto:support@devkit4ai.com"
+                className="text-primary hover:underline"
+              >
+                support@devkit4ai.com
+              </a>
+            </span>
           </div>
         </div>
       </div>

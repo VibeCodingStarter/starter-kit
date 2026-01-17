@@ -10,7 +10,7 @@ import {
   Github,
   FileCode,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useDeploymentMode } from "@/lib/auth-context";
 
@@ -20,8 +20,17 @@ export default function GetStarted() {
   const getStartedLink = isLocal ? "/dashboard" : "/console";
 
   const [copied, setCopied] = useState(false);
-  const installCommand =
-    "npx create-next-app@latest my-ai-app --example https://github.com/VibeCodingStarter/starter-kit";
+  const [isWindows, setIsWindows] = useState(false);
+
+  useEffect(() => {
+    setIsWindows(navigator.platform.toLowerCase().includes("win"));
+  }, []);
+
+  const unixCommand = `printf "Project name (default: my-ai-app): " && read PROJECT_NAME && PROJECT_NAME=\${PROJECT_NAME:-my-ai-app} && git clone https://github.com/VibeCodingStarter/starter-kit.git $PROJECT_NAME && cd $PROJECT_NAME && npm install && cp .env.example .env.local && npm run dev`;
+
+  const windowsCommand = `$PROJECT_NAME = Read-Host "Project name (default: my-ai-app)"; if (!$PROJECT_NAME) { $PROJECT_NAME = "my-ai-app" }; git clone https://github.com/VibeCodingStarter/starter-kit.git $PROJECT_NAME; cd $PROJECT_NAME; npm install; Copy-Item .env.example .env.local; npm run dev`;
+
+  const installCommand = isWindows ? windowsCommand : unixCommand;
 
   const copyToClipboard = async () => {
     try {
@@ -85,28 +94,55 @@ export default function GetStarted() {
               </div>
 
               <div className="bg-black/50 rounded-lg p-4 mb-6">
-                <div className="flex items-center justify-between gap-4">
-                  <code className="text-sm sm:text-base text-gray-300 font-mono break-all flex-1">
-                    {installCommand}
-                  </code>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={copyToClipboard}
-                    className="flex-shrink-0 text-gray-400 hover:text-white"
-                  >
-                    {copied ? (
-                      <>
-                        <CheckCircle className="w-4 h-4 mr-2 text-green-400" />
-                        Copied!
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-4 h-4 mr-2" />
-                        Copy
-                      </>
-                    )}
-                  </Button>
+                <div className="space-y-2">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 space-y-1 font-mono text-sm">
+                      <div className="text-green-400">
+                        <span className="text-gray-500">$</span> git clone
+                        https://github.com/VibeCodingStarter/starter-kit.git{" "}
+                        <span className="text-blue-400">
+                          [your-project-name]
+                        </span>
+                      </div>
+                      <div className="text-green-400">
+                        <span className="text-gray-500">$</span> cd{" "}
+                        <span className="text-blue-400">
+                          [your-project-name]
+                        </span>
+                      </div>
+                      <div className="text-green-400">
+                        <span className="text-gray-500">$</span> npm install
+                      </div>
+                      <div className="text-green-400">
+                        <span className="text-gray-500">$</span> cp .env.example
+                        .env.local
+                      </div>
+                      <div className="text-green-400">
+                        <span className="text-gray-500">$</span> npm run dev
+                      </div>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={copyToClipboard}
+                      className="flex-shrink-0 text-gray-400 hover:text-white"
+                    >
+                      {copied ? (
+                        <>
+                          <CheckCircle className="w-4 h-4 mr-2 text-green-400" />
+                          Copied!
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-4 h-4 mr-2" />
+                          Copy
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">
+                    Click Copy to get the one-line command for your terminal
+                  </p>
                 </div>
               </div>
 

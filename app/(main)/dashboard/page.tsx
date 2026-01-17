@@ -121,8 +121,10 @@ export default async function DashboardPage() {
                 <Button variant="outline" disabled className="w-full">
                   Usage History
                 </Button>
-                <Button variant="outline" disabled className="w-full">
-                  Billing
+                <Button variant="outline" asChild className="w-full">
+                  <Link href="/billing" className="font-semibold">
+                    Billing
+                  </Link>
                 </Button>
               </div>
             </div>

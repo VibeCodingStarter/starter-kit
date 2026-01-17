@@ -1,5 +1,32 @@
 # Changelog
 
+### v1.9.0 [2026-01-14]
+
+Improved UI component styling with explicit dark mode support and added billing and payment features for project mode.
+
+#### Added
+- Added billing page with subscription management and transaction history
+- Added test payment page for payment integration testing
+- Added payment actions and utilities for processing transactions
+- Added `PaymentButton` component for initiating payment flows
+- Added `Alert`, `AlertTitle`, and `AlertDescription` components for displaying alert messages
+
+#### Changed
+- Updated `Button` component variants with explicit colors (`purple-600`, `red-600`) instead of CSS variables for improved dark mode support
+- Enhanced `Button` component focus ring styling with explicit colors and proper dark mode offsets
+- Updated `DropdownMenu` component with explicit border colors for better visibility
+- Updated `Select` component with explicit styling for triggers and menu items
+- Updated `Select` content z-index to `z-[9999]` for proper layering
+- Updated header navigation breakpoints from `sm:` to `md:` for better responsive behavior
+- Updated dashboard billing button to link to `/billing` page instead of being disabled
+- Improved responsive styling in header with hidden and inline-flex visibility changes
+
+#### Fixed
+- Removed "Forgot password?" link from login form (now commented out)
+
+#### Removed
+- Removed usage of CSS variable references (`bg-primary`, `text-primary-foreground`, etc.) in favor of explicit color values
+
 ### v1.8.0 [2025-12-07]
 
 Enhanced user experience with personalized dashboard greetings and improved authentication for end-user projects.
